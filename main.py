@@ -1,3 +1,4 @@
+from BúsquedaNoInformada.costoUniforme import costoUniforme
 from BúsquedaNoInformada.amplitud import amplitud
 
 def main():
@@ -30,7 +31,8 @@ def main():
             if (mundo[i][j] == 4):
                 posPaquetes.append((i, j))
 
-    camino = amplitud(mundo, filas, columnas, posPaquetes, posInicial)
+    #camino = amplitud(mundo, filas, columnas, posPaquetes, posInicial)
+    camino = costoUniforme(mundo, filas, columnas, posPaquetes, posInicial)
     print(camino)
 
     # Visualizar el camino en el mundo
