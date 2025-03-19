@@ -1,5 +1,6 @@
 from BúsquedaNoInformada.costoUniforme import costoUniforme
 from BúsquedaNoInformada.amplitud import amplitud
+from BúsquedaNoInformada.profundidad import profundidad
 
 def main():
 
@@ -22,7 +23,6 @@ def main():
 
     # Almacenar las posiciones de los paquetes y el dron
     posPaquetes = []
-    #posInicial = (0,0)
 
     for i in range (filas):
         for j in range (columnas):
@@ -32,7 +32,8 @@ def main():
                 posPaquetes.append((i, j))
 
     #camino = amplitud(mundo, filas, columnas, posPaquetes, posInicial)
-    camino = costoUniforme(mundo, filas, columnas, posPaquetes, posInicial)
+    #camino = costoUniforme(mundo, filas, columnas, posPaquetes, posInicial)
+    camino = profundidad(mundo, filas, columnas, posPaquetes, posInicial)
     print(camino)
 
     # Visualizar el camino en el mundo
