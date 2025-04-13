@@ -7,23 +7,24 @@ def amplitud(mundo, filas, columnas, posPaquetes, posInicial):
     inicio_tiempo = time.time()
     nodoInicial = Nodo(posInicial, None, set(), profundidad=0)
     queue = deque([nodoInicial])
-    nodosExpandidosLista = [nodoInicial]
+    nodosCreadosLista = [nodoInicial]
+    nodosExpandidosCount = 0
     profundidad_maxima = 0
 
     # Lista para almacenar los estados (posición + paquetes recogidos) visitados
     estadosVisitados = [(posInicial, frozenset())]
 
     while queue:
-        nodo = queue.popleft() # Extrae el primer nodo de la cola
+        nodo = queue.popleft()
+        nodosExpandidosCount += 1
         profundidad_maxima = max(profundidad_maxima, nodo.profundidad)
 
         if (len(nodo.paquetes) == len(posPaquetes)):
             fin_tiempo = time.time()
             tiempo_ejecucion = fin_tiempo - inicio_tiempo
-            nodos_expandidos_count = len(nodosExpandidosLista)
             profundidad_solucion = nodo.profundidad
             camino = nodo.construirCamino()
-            return camino, tiempo_ejecucion, nodos_expandidos_count, profundidad_solucion
+            return camino, tiempo_ejecucion, nodosExpandidosCount, profundidad_solucion
 
         movimientosPosibles = [(nodo.posición[0] + 1, nodo.posición[1]), # Abajo
                                 (nodo.posición[0] - 1, nodo.posición[1]),  # Arriba
@@ -46,9 +47,8 @@ def amplitud(mundo, filas, columnas, posPaquetes, posInicial):
                         estadosVisitados.append(estado)  # Si no ha sido visitado, se añade a los estados visitados
                         nuevo_nodo = Nodo(movimiento, nodo, paquetes, profundidad=nodo.profundidad + 1)
                         queue.append(nuevo_nodo) # Se agrega el nodo a la cola
-                        nodosExpandidosLista.append(nuevo_nodo)
+                        nodosCreadosLista.append(nuevo_nodo)
 
     fin_tiempo = time.time()
     tiempo_ejecucion = fin_tiempo - inicio_tiempo
-    nodos_expandidos_count = len(nodosExpandidosLista)
-    return None, tiempo_ejecucion, nodos_expandidos_count, profundidad_maxima
+    return None, tiempo_ejecucion, nodosExpandidosCount, profundidad_maxima
