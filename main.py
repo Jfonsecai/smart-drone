@@ -1,19 +1,21 @@
 from BúsquedaNoInformada.costoUniforme import costoUniforme
 from BúsquedaNoInformada.amplitud import amplitud
 from BúsquedaNoInformada.profundidad import profundidad
+from BúsquedaInformada.avara import avara
+from BúsquedaInformada.aStar import aStar
 
 def main():
 
     mundo = [
         [1, 1, 0, 0, 0, 0, 0, 1, 1, 1],
         [1, 1, 0, 1, 0, 1, 0, 1, 1, 1],
-        [0, 2, 0, 3, 4, 0, 0, 0, 0, 0],
+        [0, 2, 0, 3, 4, 4, 0, 0, 0, 0],
         [0, 1, 1, 1, 0, 1, 1, 1, 1, 0],
         [0, 1, 1, 1, 0, 0, 0, 0, 0, 0],
         [3, 3, 0, 1, 0, 1, 1, 1, 1, 1],
         [1, 1, 0, 1, 0, 0, 0, 0, 0, 0],
         [1, 1, 0, 1, 1, 1, 1, 1, 1, 0],
-        [1, 1, 0, 0, 0, 0, 0, 0, 0, 0],
+        [1, 1, 0, 0, 0, 4, 0, 0, 0, 0],
         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
     ]
 
@@ -33,7 +35,7 @@ def main():
 
     #camino = amplitud(mundo, filas, columnas, posPaquetes, posInicial)
     #camino = costoUniforme(mundo, filas, columnas, posPaquetes, posInicial)
-    camino = profundidad(mundo, filas, columnas, posPaquetes, posInicial)
+    camino = aStar(mundo, filas, columnas, posPaquetes, posInicial)
     print(camino)
 
     # Visualizar el camino en el mundo

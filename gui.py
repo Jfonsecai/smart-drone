@@ -4,6 +4,8 @@ from PIL import Image, ImageSequence
 from BúsquedaNoInformada.amplitud import amplitud
 from BúsquedaNoInformada.costoUniforme import costoUniforme
 from BúsquedaNoInformada.profundidad import profundidad
+from BúsquedaInformada.avara import avara
+from BúsquedaInformada.aStar import aStar
 from Nodo import Nodo
 
 pygame.init()
@@ -33,13 +35,13 @@ ROJO_ERROR = (150, 50, 50)
 VERDE_INFO = (50, 150, 50)
 
 # Cargar imágenes
-img_valla = pygame.transform.scale(pygame.image.load("assets/valla.png"), (celdaTamano, celdaTamano))
-img_caja = pygame.transform.scale(pygame.image.load("assets/box.png"), (celdaTamano, celdaTamano))
-img_campo = pygame.transform.scale(pygame.image.load("assets/campo-magnetico.png"), (celdaTamano, celdaTamano))
-img_piso = pygame.transform.scale(pygame.image.load("assets/fondo.png"), (celdaTamano, celdaTamano))
+img_valla = pygame.transform.scale(pygame.image.load("Smart-drone/assets/valla.png"), (celdaTamano, celdaTamano))
+img_caja = pygame.transform.scale(pygame.image.load("Smart-drone/assets/box.png"), (celdaTamano, celdaTamano))
+img_campo = pygame.transform.scale(pygame.image.load("Smart-drone/assets/campo-magnetico.png"), (celdaTamano, celdaTamano))
+img_piso = pygame.transform.scale(pygame.image.load("Smart-drone/assets/fondo.png"), (celdaTamano, celdaTamano))
 
 # Cargar GIF dron
-ruta_gif = "assets/dron-moving.gif"
+ruta_gif = "Smart-drone/assets/dron-moving.gif"
 imagen_gif = Image.open(ruta_gif)
 frames = []
 for frame in ImageSequence.Iterator(imagen_gif):
@@ -50,7 +52,7 @@ for frame in ImageSequence.Iterator(imagen_gif):
 
 # Funciones auxiliares
 def cargar_mapa(nombre_archivo):
-    ruta_completa = os.path.join("maps", nombre_archivo)
+    ruta_completa = os.path.join("Smart-drone/maps", nombre_archivo)
     with open(ruta_completa, "r") as archivo:
         return [list(map(int, linea.strip().split())) for linea in archivo]
 
@@ -104,7 +106,7 @@ def mostrar_ventana_emergente(texto):
     return True
 
 # Archivos y algoritmos disponibles
-archivos = [f for f in os.listdir("maps") if f.endswith(".txt")]
+archivos = [f for f in os.listdir("Smart-drone/maps") if f.endswith(".txt")]
 algoritmos_no_informados = [
     ("AMPLITUD", "Amplitud"),
     ("COSTO_UNIFORME", "Costo Uniforme"),
@@ -275,6 +277,8 @@ while ejecutando:
                         mostrar_info = True
                     elif clave_algoritmo == "PROFUNDIDAD":
                         resultado = profundidad(mundo, len(mundo), len(mundo[0]), pos_paquetes, pos_inicial)
+                        print(resultado)
+
                         if resultado[0]:  # Se encontró un camino
                             camino = resultado[0]
                             tiempo_ejecucion = resultado[1]
@@ -320,11 +324,56 @@ while ejecutando:
                         mostrar_resultado = True
                         mostrar_info = True
                     elif clave_algoritmo == "AVARA":
-                        texto_info = "Algoritmo Avara seleccionado (sin implementar)."
+                        resultado = avara(mundo, len(mundo), len(mundo[0]), pos_paquetes, pos_inicial)
+                        print("Resultado Avara:", resultado)
+
+                        if resultado[0]:  # Se encontró un camino
+                            camino = resultado[0]
+                            tiempo_ejecucion = resultado[1]
+                            nodos_expandidos_count = resultado[2]
+                            profundidad_solucion = resultado[3]
+                            costo_total = resultado[4]
+                            texto_info = f"Búsqueda por Avara\n" \
+                                        f"Tiempo de ejecución: {tiempo_ejecucion:.4f} segundos\n" \
+                                        f"Nodos expandidos: {nodos_expandidos_count}\n" \
+                                        f"Profundidad de la solución: {profundidad_solucion}\n" \
+                                        f"Costo total: {costo_total}\n"
+                        else:
+                            tiempo_ejecucion = resultado[1]
+                            nodos_expandidos_count = resultado[2]
+                            profundidad_maxima = resultado[3]
+                            texto_info = f"Búsqueda por Avara\n" \
+                                        f"Tiempo de ejecución: {tiempo_ejecucion:.4f} segundos\n" \
+                                        f"Nodos expandidos: {nodos_expandidos_count}\n" \
+                                        f"Profundidad máxima alcanzada: {profundidad_maxima}\n" \
+                                        f"No se encontró solución."
+                        ## texto_info = "Algoritmo Avara seleccionado (sin implementar)."
                         mostrar_resultado = True
                         mostrar_info = True
                     elif clave_algoritmo == "A_ESTRELLA":
-                        texto_info = "Algoritmo A* seleccionado (sin implementar)."
+                        resultado = aStar(mundo, len(mundo), len(mundo[0]), pos_paquetes, pos_inicial)
+                        print("Resultado A*:", resultado)
+
+                        if resultado[0]:  # Se encontró un camino
+                            camino = resultado[0]
+                            tiempo_ejecucion = resultado[1]
+                            nodos_expandidos_count = resultado[2]
+                            profundidad_solucion = resultado[3]
+                            costo_total = resultado[4]
+                            texto_info = f"Búsqueda por A*\n" \
+                                        f"Tiempo de ejecución: {tiempo_ejecucion:.4f} segundos\n" \
+                                        f"Nodos expandidos: {nodos_expandidos_count}\n" \
+                                        f"Profundidad de la solución: {profundidad_solucion}\n" \
+                                        f"Costo total: {costo_total}\n"
+                        else:
+                            tiempo_ejecucion = resultado[1]
+                            nodos_expandidos_count = resultado[2]
+                            profundidad_maxima = resultado[3]
+                            texto_info = f"Búsqueda por A*\n" \
+                                        f"Tiempo de ejecución: {tiempo_ejecucion:.4f} segundos\n" \
+                                        f"Nodos expandidos: {nodos_expandidos_count}\n" \
+                                        f"Profundidad máxima alcanzada: {profundidad_maxima}\n" \
+                                        f"No se encontró solución."
                         mostrar_resultado = True
                         mostrar_info = True
 

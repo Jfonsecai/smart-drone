@@ -1,11 +1,12 @@
 class Nodo():
-    def __init__(self, posición, padre=None, paquetes=None, costo=0, profundidad=0):
+    def __init__(self, posición, padre=None, paquetes=None, costo=0, profundidad=0, heuristica=0):
         self.posición = posición
         self.padre = padre
         #self.accion = accion
         self.paquetes = paquetes if paquetes else set()
         self.costo = costo
         self.profundidad = profundidad
+        self.heuristica = heuristica
 
     def construirCamino(self):
         """Reconstruye el camino desde el nodo raíz hasta este nodo."""
