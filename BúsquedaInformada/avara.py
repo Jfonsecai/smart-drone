@@ -66,7 +66,7 @@ def avara(mundo, filas, columnas, posPaquetes, posInicial):
             for i, paso in enumerate(camino):
                 print(f"Paso {i+1}: {paso}")
 
-            return camino; tiempo_ejecucion, nodos_expandidos, nodo_actual.profundidad
+            return camino, tiempo_ejecucion, nodos_expandidos, nodo_actual.profundidad
         
         # Crear un identificador único para el estado actual
         estado_actual = (nodo_actual.posición, frozenset(nodo_actual.paquetes))

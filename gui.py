@@ -301,6 +301,8 @@ while ejecutando:
                         mostrar_info = True
                     elif clave_algoritmo == "COSTO_UNIFORME":
                         resultado = costoUniforme(mundo, len(mundo), len(mundo[0]), pos_paquetes, pos_inicial)
+                        print(resultado)
+
                         if resultado[0]:  # Se encontró un camino
                             camino = resultado[0]
                             tiempo_ejecucion = resultado[1]
@@ -325,7 +327,7 @@ while ejecutando:
                         mostrar_info = True
                     elif clave_algoritmo == "AVARA":
                         resultado = avara(mundo, len(mundo), len(mundo[0]), pos_paquetes, pos_inicial)
-                        print("Resultado Avara:", resultado)
+                        print(resultado)
 
                         if resultado[0]:  # Se encontró un camino
                             camino = resultado[0]
@@ -352,7 +354,9 @@ while ejecutando:
                         mostrar_info = True
                     elif clave_algoritmo == "A_ESTRELLA":
                         resultado = aStar(mundo, len(mundo), len(mundo[0]), pos_paquetes, pos_inicial)
-                        print("Resultado A*:", resultado)
+                        print(pos_paquetes)
+                        print(pos_inicial)
+                        print(resultado)
 
                         if resultado[0]:  # Se encontró un camino
                             camino = resultado[0]

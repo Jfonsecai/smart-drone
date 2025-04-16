@@ -67,7 +67,7 @@ def aStar(mundo, filas, columnas, posPaquetes, posInicial):
             camino = nodo_actual.construirCamino()
             
             # Devolver resultados: camino, tiempo, nodos expandidos, profundidad, costo
-            return [camino, tiempo_ejecucion, nodos_expandidos, nodo_actual.profundidad, nodo_actual.costo]
+            return (camino, tiempo_ejecucion, nodos_expandidos, nodo_actual.profundidad, nodo_actual.costo)
         
         # Crear un identificador único para el estado actual
         estado_actual = (nodo_actual.posición, frozenset(nodo_actual.paquetes))

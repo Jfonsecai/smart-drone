@@ -35,7 +35,7 @@ def main():
 
     #camino = amplitud(mundo, filas, columnas, posPaquetes, posInicial)
     #camino = costoUniforme(mundo, filas, columnas, posPaquetes, posInicial)
-    camino = aStar(mundo, filas, columnas, posPaquetes, posInicial)
+    camino = avara(mundo, filas, columnas, posPaquetes, posInicial)
     print(camino)
 
     # Visualizar el camino en el mundo
