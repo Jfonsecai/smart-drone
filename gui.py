@@ -327,19 +327,15 @@ while ejecutando:
                         mostrar_info = True
                     elif clave_algoritmo == "AVARA":
                         resultado = avara(mundo, len(mundo), len(mundo[0]), pos_paquetes, pos_inicial)
-                        print(resultado)
-
                         if resultado[0]:  # Se encontró un camino
                             camino = resultado[0]
                             tiempo_ejecucion = resultado[1]
                             nodos_expandidos_count = resultado[2]
                             profundidad_solucion = resultado[3]
-                            costo_total = resultado[4]
                             texto_info = f"Búsqueda por Avara\n" \
                                         f"Tiempo de ejecución: {tiempo_ejecucion:.4f} segundos\n" \
                                         f"Nodos expandidos: {nodos_expandidos_count}\n" \
-                                        f"Profundidad de la solución: {profundidad_solucion}\n" \
-                                        f"Costo total: {costo_total}\n"
+                                        f"Profundidad de la solución: {profundidad_solucion}\n" 
                         else:
                             tiempo_ejecucion = resultado[1]
                             nodos_expandidos_count = resultado[2]
@@ -349,7 +345,6 @@ while ejecutando:
                                         f"Nodos expandidos: {nodos_expandidos_count}\n" \
                                         f"Profundidad máxima alcanzada: {profundidad_maxima}\n" \
                                         f"No se encontró solución."
-                        ## texto_info = "Algoritmo Avara seleccionado (sin implementar)."
                         mostrar_resultado = True
                         mostrar_info = True
                     elif clave_algoritmo == "A_ESTRELLA":
