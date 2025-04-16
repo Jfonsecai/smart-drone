@@ -381,7 +381,7 @@ while ejecutando:
                         mostrar_resultado = True
                         mostrar_info = True
 
-                    if camino and clave_algoritmo in ["AMPLITUD", "PROFUNDIDAD", "COSTO_UNIFORME"]:
+                    if camino and clave_algoritmo in ["AMPLITUD", "PROFUNDIDAD", "COSTO_UNIFORME", "AVARA", "A_ESTRELLA"]:  
                         animar = True
                         pos_dron = pos_inicial
                         rastros = []
