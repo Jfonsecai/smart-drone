@@ -1,15 +1,15 @@
 import heapq
 import time 
 from Nodo import Nodo
+
 def costoUniforme(mundo, filas, columnas, posPaquetes, posInicial):
     inicio_tiempo = time.time()
-    nodoInicial = Nodo(posInicial, None, set(), 0, 0) # Inicializar profundidad en 0
+    nodoInicial = Nodo(posInicial, None, set(), 0, 0)  # profundidad y costo en 0
     nodosExpandidosLista = []
     nodosExpandidos = [(0, nodoInicial)]  # Cola de prioridad con (costo, nodo)
-    visitados = set()  # Conjunto para rastrear estados visitados (posición y paquetes)
+    visitados = set()  # Estados visitados (posición, paquetes)
     profundidad_maxima = 0
 
-    # Diccionario para almacenar el menor costo por estado
     costo_minimo = {(posInicial, frozenset()): 0}
 
     while nodosExpandidos:
@@ -18,10 +18,8 @@ def costoUniforme(mundo, filas, columnas, posPaquetes, posInicial):
 
         if estado_actual in visitados:
             continue
-        visitados.add(estado_actual)
-        nodosExpandidosLista.append(nodo)
-        profundidad_maxima = max(profundidad_maxima, nodo.profundidad)
 
+        # Verificamos primero si es solución
         if len(nodo.paquetes) == len(posPaquetes):
             fin_tiempo = time.time()
             tiempo_ejecucion = fin_tiempo - inicio_tiempo
@@ -30,6 +28,11 @@ def costoUniforme(mundo, filas, columnas, posPaquetes, posInicial):
             nodos_expandidos_count = len(nodosExpandidosLista)
             profundidad_solucion = nodo.profundidad
             return camino, tiempo_ejecucion, nodos_expandidos_count, profundidad_solucion, costo_total
+
+        # Si no es solución, lo marcamos como visitado y lo expandimos
+        visitados.add(estado_actual)
+        nodosExpandidosLista.append(nodo)
+        profundidad_maxima = max(profundidad_maxima, nodo.profundidad)
 
         movimientosPosibles = [
             (nodo.posición[0] + 1, nodo.posición[1]),  # Abajo
@@ -45,11 +48,12 @@ def costoUniforme(mundo, filas, columnas, posPaquetes, posInicial):
                     paquetes_nuevos = set(nodo.paquetes)
                     if movimiento in posPaquetes:
                         paquetes_nuevos.add(movimiento)
+
                     estado = (movimiento, frozenset(paquetes_nuevos))
 
                     if estado not in costo_minimo or nuevo_costo < costo_minimo[estado]:
                         costo_minimo[estado] = nuevo_costo
-                        nuevoNodo = Nodo(movimiento, nodo, paquetes_nuevos, nuevo_costo, nodo.profundidad + 1) # Incrementar profundidad
+                        nuevoNodo = Nodo(movimiento, nodo, paquetes_nuevos, nuevo_costo, nodo.profundidad + 1)
                         heapq.heappush(nodosExpandidos, (nuevo_costo, nuevoNodo))
 
     fin_tiempo = time.time()

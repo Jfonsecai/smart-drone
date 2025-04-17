@@ -29,10 +29,11 @@ def amplitud(mundo, filas, columnas, posPaquetes, posInicial):
         profundidad_maxima = max(profundidad_maxima, nodo.profundidad)
 
         movimientosPosibles = [
-            (nodo.posición[0] + 1, nodo.posición[1]),  # Abajo
             (nodo.posición[0] - 1, nodo.posición[1]),  # Arriba
-            (nodo.posición[0], nodo.posición[1] + 1),  # Derecha
-            (nodo.posición[0], nodo.posición[1] - 1)   # Izquierda
+            (nodo.posición[0], nodo.posición[1] - 1),   # Izquierda
+            (nodo.posición[0] + 1, nodo.posición[1]),  # Abajo
+            (nodo.posición[0], nodo.posición[1] + 1)  # Derecha
+            
         ]
 
         for movimiento in movimientosPosibles:
@@ -47,6 +48,7 @@ def amplitud(mundo, filas, columnas, posPaquetes, posInicial):
                     if estado not in estadosVisitados:
                         estadosVisitados.append(estado)
                         nuevo_nodo = Nodo(movimiento, nodo, paquetes, profundidad=nodo.profundidad + 1)
+                       
                         queue.append(nuevo_nodo)
                         nodosCreadosLista.append(nuevo_nodo)
 
