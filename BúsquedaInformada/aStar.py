@@ -92,7 +92,7 @@ def aStar(mundo, filas, columnas, posPaquetes, posInicial):
                 
                 # Si es un campo electromagnético, aumentamos el costo
                 if mundo[nueva_fila][nueva_col] == 3:
-                    nuevo_costo += 2
+                    nuevo_costo += 8
                 
                 # Copiar los paquetes recogidos hasta ahora
                 paquetes_recogidos = set(nodo_actual.paquetes)
