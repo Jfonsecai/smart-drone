@@ -1,39 +1,50 @@
 from Nodo import Nodo
-
+import time
 
 def profundidad(mundo, filas, columnas, posPaquetes, posInicial):
-    nodoInicial = Nodo(posInicial, None, set())
-    stack = [(nodoInicial, set())]  # Usamos una lista que simulara una pila, que almacena tuplas: (nodo, estados visitados en la rama)
+    inicio_tiempo = time.time()
+    nodoInicial = Nodo(posInicial, None, set(), profundidad=0)
+    stack = [(nodoInicial, set())]
+    nodos_expandidos = 0
+    profundidad_maxima = 0
 
     while stack:
-        nodo, visitadosRama = stack.pop()  # Extraemos el último nodo (LIFO)
+        nodo, visitadosRama = stack.pop()
 
-        if len(nodo.paquetes) == len(posPaquetes):  
-            return nodo.construirCamino()  # Retorna el camino si ya recogió todos los paquetes
-        
-        # Marcar este estado como visitado en esta rama
+        # Verificar si el nodo actual es la solución ANTES de expandirlo
+        if len(nodo.paquetes) == len(posPaquetes):
+            fin_tiempo = time.time()
+            tiempo_ejecucion = fin_tiempo - inicio_tiempo
+            camino = nodo.construirCamino()
+            return camino, tiempo_ejecucion, nodos_expandidos, nodo.profundidad
+
+        # Si no es la solución, lo contamos como expandido
+        nodos_expandidos += 1
+        profundidad_maxima = max(profundidad_maxima, nodo.profundidad)
+
         estado = (nodo.posición, frozenset(nodo.paquetes))
         visitadosRama.add(estado)
 
-        # Acá definimos el orden de los operadores, que por la estructura de pila es inverso a como se agregan.
-        # Por tanto es: derecha, abajo, izquierda, arriba. Se priorizaron de esta manera porque es óptimo para el mundo 
-        # definido en el proyecto, pero no necesariamente es el mejor orden para otros mundos.
-        movimientosPosibles = [(nodo.posición[0] - 1, nodo.posición[1]),  # Arriba
-                               (nodo.posición[0], nodo.posición[1] - 1),  # Izquierda
-                               (nodo.posición[0] + 1, nodo.posición[1]),  # Abajo
-                               (nodo.posición[0], nodo.posición[1] + 1)]  # Derecha           
+        movimientosPosibles = [
+            (nodo.posición[0] - 1, nodo.posición[1]),   # Arriba
+            (nodo.posición[0], nodo.posición[1] - 1),   # Izquierda
+            (nodo.posición[0] + 1, nodo.posición[1]),   # Abajo
+            (nodo.posición[0], nodo.posición[1] + 1)    # Derecha
+        ]
 
         for movimiento in movimientosPosibles:
-            if 0 <= movimiento[0] < filas and 0 <= movimiento[1] < columnas: # Verifica que esté dentro del mundo
-                if mundo[movimiento[0]][movimiento[1]] != 1:  # Verifica que no es obstáculo
-        
-                    paquetes = set(nodo.paquetes) # Crea un nuevo set con los paquetes recogidos del nodo padre
-                    
-                    if movimiento in posPaquetes:
-                        paquetes.add(movimiento) # Si la nueva posición es un paquete, se añade la coordenada del paquete recogido
+            if 0 <= movimiento[0] < filas and 0 <= movimiento[1] < columnas:
+                if mundo[movimiento[0]][movimiento[1]] != 1:
+                    paquetes = set(nodo.paquetes)
+                    if movimiento in posPaquetes and movimiento not in paquetes:
+                        paquetes.add(movimiento)
 
                     nuevoEstado = (movimiento, frozenset(paquetes))
-                    
-                    if nuevoEstado not in visitadosRama:  # Verifica si el estado actual ya ha sido visitado, para evitar ciclos en esta rama
-                        # Se añade el nodo a la pila, junto con los estados visitados en esta rama
-                        stack.append((Nodo(movimiento, nodo, paquetes), visitadosRama.copy()))  
+
+                    if nuevoEstado not in visitadosRama:
+                        nuevo_nodo = Nodo(movimiento, nodo, paquetes, profundidad=nodo.profundidad + 1)
+                        stack.append((nuevo_nodo, visitadosRama.copy()))
+
+    fin_tiempo = time.time()
+    tiempo_ejecucion = fin_tiempo - inicio_tiempo
+    return None, tiempo_ejecucion, nodos_expandidos, profundidad_maxima
