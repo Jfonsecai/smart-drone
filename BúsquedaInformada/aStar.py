@@ -57,8 +57,8 @@ def aStar(mundo, filas, columnas, posPaquetes, posInicial):
         profundidad_maxima = max(profundidad_maxima, nodo_actual.profundidad)
         
         # Verificar si estamos en un paquete y actualizar la lista de paquetes recogidos
-        if nodo_actual.posición in paquetes_objetivo:
-            nodo_actual.paquetes.add(nodo_actual.posición)
+        # if nodo_actual.posición in paquetes_objetivo:
+        #     nodo_actual.paquetes.add(nodo_actual.posición)
         
         # Si ya hemos recogido todos los paquetes, hemos terminado
         if len(nodo_actual.paquetes) == total_paquetes:
@@ -88,14 +88,18 @@ def aStar(mundo, filas, columnas, posPaquetes, posInicial):
                 mundo[nueva_fila][nueva_col] != 1):  # No es un obstáculo
                 
                 nueva_pos = (nueva_fila, nueva_col)
-                nuevo_costo = nodo_actual.costo + 1  # Costo uniforme por cada movimiento
-                
-                # Si es un campo electromagnético, aumentamos el costo
+            
+                # Verificamos si es un campo electromagnético y aumentamos el costo de acuerdo a eso
                 if mundo[nueva_fila][nueva_col] == 3:
-                    nuevo_costo += 8
+                    nuevo_costo = nodo_actual.costo + 8
+                else:
+                    nuevo_costo = nodo_actual.costo + 1
                 
                 # Copiar los paquetes recogidos hasta ahora
                 paquetes_recogidos = set(nodo_actual.paquetes)
+                # Verificar si recogemos un nuevo paquete
+                if nueva_pos in paquetes_objetivo:
+                    paquetes_recogidos.add(nueva_pos)
                 
                 # Calcular la heurística: distancia al paquete más cercano que no hemos recogido
                 paquetes_por_recoger = paquetes_objetivo - paquetes_recogidos

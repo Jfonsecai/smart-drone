@@ -42,11 +42,11 @@ def costoUniforme(mundo, filas, columnas, posPaquetes, posInicial):
         ]
 
         for movimiento in movimientosPosibles:
-            if 0 <= movimiento[0] < filas and 0 <= movimiento[1] < columnas:
-                if mundo[movimiento[0]][movimiento[1]] != 1:
+            if 0 <= movimiento[0] < filas and 0 <= movimiento[1] < columnas: # Verificamos límites
+                if mundo[movimiento[0]][movimiento[1]] != 1: # Verificamos que no sea obstáculo
                     nuevo_costo = nodo.costo + (8 if mundo[movimiento[0]][movimiento[1]] == 3 else 1)
                     paquetes_nuevos = set(nodo.paquetes)
-                    if movimiento in posPaquetes:
+                    if movimiento in posPaquetes: # Verificamos si recogemos un nuevo paquete
                         paquetes_nuevos.add(movimiento)
 
                     estado = (movimiento, frozenset(paquetes_nuevos))

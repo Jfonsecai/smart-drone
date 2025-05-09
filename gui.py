@@ -35,13 +35,13 @@ ROJO_ERROR = (150, 50, 50)
 VERDE_INFO = (50, 150, 50)
 
 # Cargar imágenes
-img_valla = pygame.transform.scale(pygame.image.load("Smart-drone/assets/valla.png"), (celdaTamano, celdaTamano))
-img_caja = pygame.transform.scale(pygame.image.load("Smart-drone/assets/box.png"), (celdaTamano, celdaTamano))
-img_campo = pygame.transform.scale(pygame.image.load("Smart-drone/assets/campo-magnetico.png"), (celdaTamano, celdaTamano))
-img_piso = pygame.transform.scale(pygame.image.load("Smart-drone/assets/fondo.png"), (celdaTamano, celdaTamano))
+img_valla = pygame.transform.scale(pygame.image.load("./assets/valla.png"), (celdaTamano, celdaTamano))
+img_caja = pygame.transform.scale(pygame.image.load("./assets/box.png"), (celdaTamano, celdaTamano))
+img_campo = pygame.transform.scale(pygame.image.load("./assets/campo-magnetico.png"), (celdaTamano, celdaTamano))
+img_piso = pygame.transform.scale(pygame.image.load("./assets/fondo.png"), (celdaTamano, celdaTamano))
 
 # Cargar GIF dron
-ruta_gif = "Smart-drone/assets/dron-moving.gif"
+ruta_gif = "./assets/dron-moving.gif"
 imagen_gif = Image.open(ruta_gif)
 frames = []
 for frame in ImageSequence.Iterator(imagen_gif):
@@ -52,7 +52,7 @@ for frame in ImageSequence.Iterator(imagen_gif):
 
 # Funciones auxiliares
 def cargar_mapa(nombre_archivo):
-    ruta_completa = os.path.join("Smart-drone/maps", nombre_archivo)
+    ruta_completa = os.path.join("./maps", nombre_archivo)
     with open(ruta_completa, "r") as archivo:
         return [list(map(int, linea.strip().split())) for linea in archivo]
 
@@ -106,7 +106,7 @@ def mostrar_ventana_emergente(texto):
     return True
 
 # Archivos y algoritmos disponibles
-archivos = [f for f in os.listdir("Smart-drone/maps") if f.endswith(".txt")]
+archivos = [f for f in os.listdir("./maps") if f.endswith(".txt")]
 algoritmos_no_informados = [
     ("AMPLITUD", "Amplitud"),
     ("COSTO_UNIFORME", "Costo Uniforme"),
