@@ -2,8 +2,6 @@
 
 Implementación de algoritmos de búsqueda aplicados a planificación de rutas para drones, desarrollada como solución al Proyecto 1 del curso de Inteligencia Artificial.
 
-Repositorio alojado en :contentReference[oaicite:0]{index=0}.
-
 El objetivo principal es comparar **técnicas de búsqueda informadas y no informadas** para encontrar caminos eficientes dentro de mapas con obstáculos, incluyendo visualización del proceso de exploración.
 
 ---
